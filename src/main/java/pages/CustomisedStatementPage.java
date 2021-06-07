@@ -17,6 +17,15 @@ public class CustomisedStatementPage {
         this.driver = driver;
     }
 
+    public String getTxt() {
+        return driver.findElement(AccountNoTxt).getText() + driver.findElement(AmountLowerLimitTxt).getText();
+    }
+
+    public String txtSuccesful() {
+        driver.findElement(SubmitButton).click();
+        return driver.findElement(By.className("heading3")).getText();
+    }
+
     public void setAccountNoTxt(String accountNoTxt) {
         driver.findElement(AccountNoTxt).sendKeys(accountNoTxt);
     }
@@ -45,21 +54,33 @@ public class CustomisedStatementPage {
         driver.findElement(ResetButton).click();
     }
 
-    public void customisedStatement(String accountNoTxt, String fromDateTxt, String toDateTxt, String amountLowerLimitTxt, String numTransactionTxt){
+    public String customisedStatement(String accountNoTxt, String fromDateTxt, String toDateTxt, String amountLowerLimitTxt, String numTransactionTxt){
         this.setAccountNoTxt(accountNoTxt);
         this.setFromDateTxt(fromDateTxt);
         this.setToDateTxt(toDateTxt);
         this.setAmountLowerLimitTxt(amountLowerLimitTxt);
         this.setNumTransactionTxt(numTransactionTxt);
         this.clickSubmit();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
 
-    public void testResetButton(String accountNoTxt, String fromDateTxt, String toDateTxt, String amountLowerLimitTxt, String numTransactionTxt){
+    public String customisedStatementSuccesful(String accountNoTxt, String fromDateTxt, String toDateTxt, String amountLowerLimitTxt, String numTransactionTxt){
+        this.setAccountNoTxt(accountNoTxt);
+        this.setFromDateTxt(fromDateTxt);
+        this.setToDateTxt(toDateTxt);
+        this.setAmountLowerLimitTxt(amountLowerLimitTxt);
+        this.setNumTransactionTxt(numTransactionTxt);
+        return this.txtSuccesful();
+    }
+
+    public String testResetButton(String accountNoTxt, String fromDateTxt, String toDateTxt, String amountLowerLimitTxt, String numTransactionTxt){
         this.setAccountNoTxt(accountNoTxt);
         this.setFromDateTxt(fromDateTxt);
         this.setToDateTxt(toDateTxt);
         this.setAmountLowerLimitTxt(amountLowerLimitTxt);
         this.setNumTransactionTxt(numTransactionTxt);
         this.clickReset();
+        return getTxt();
     }
 }

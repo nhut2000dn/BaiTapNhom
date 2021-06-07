@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.sql.Driver;
+
 public class NewCustomerPage {
 
     private WebDriver driver;
@@ -26,6 +28,10 @@ public class NewCustomerPage {
 
     public void setCustomerNameTxt(String customerName) {
         driver.findElement(customerNameTxt).sendKeys(customerName);
+    }
+
+    public String getTxt() {
+        return driver.findElement(customerNameTxt).getText() + driver.findElement(StateTxt).getText() + driver.findElement(AddressTxt).getText();
     }
 
     public void setGenderRadio(String genderRadio) {
@@ -72,11 +78,16 @@ public class NewCustomerPage {
         driver.findElement(submitButton).click();
     }
 
+    public String txtSuccesful() {
+        driver.findElement(submitButton).click();
+        return driver.findElement(By.className("heading3")).getText();
+    }
+
     public void clickReset() {
         driver.findElement(resetButton).click();
     }
 
-    public void newCustomer(String customerName, String genderRadio, String dateOfBirth, String addressTxt, String cityTxt, String stateTxt, String pinTxt, String telephoneNumberTxt, String emailTxt, String passwordTxt){
+    public String newCustomer(String customerName, String genderRadio, String dateOfBirth, String addressTxt, String cityTxt, String stateTxt, String pinTxt, String telephoneNumberTxt, String emailTxt, String passwordTxt){
         this.setCustomerNameTxt(customerName);
         this.setGenderRadio(genderRadio);
         this.setCustomerDateOfBirthTxt(dateOfBirth);
@@ -88,9 +99,25 @@ public class NewCustomerPage {
         this.setEmailTxt(emailTxt);
         this.setPasswordTxt(passwordTxt);
         this.clickSubmit();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
 
-    public void testResetButton(String customerName, String genderRadio, String dateOfBirth, String addressTxt, String cityTxt, String stateTxt, String pinTxt, String telephoneNumberTxt, String emailTxt, String passwordTxt){
+    public String testSusscesful(String customerName, String genderRadio, String dateOfBirth, String addressTxt, String cityTxt, String stateTxt, String pinTxt, String telephoneNumberTxt, String emailTxt, String passwordTxt){
+        this.setCustomerNameTxt(customerName);
+        this.setGenderRadio(genderRadio);
+        this.setCustomerDateOfBirthTxt(dateOfBirth);
+        this.setCustomerAddressTxt(addressTxt);
+        this.setCityTxt(cityTxt);
+        this.setStateTxt(stateTxt);
+        this.setPinTxt(pinTxt);
+        this.setTelephoneNumberTxt(telephoneNumberTxt);
+        this.setEmailTxt(emailTxt);
+        this.setPasswordTxt(passwordTxt);
+        return this.txtSuccesful();
+    }
+
+    public String testResetButton(String customerName, String genderRadio, String dateOfBirth, String addressTxt, String cityTxt, String stateTxt, String pinTxt, String telephoneNumberTxt, String emailTxt, String passwordTxt){
         this.setCustomerNameTxt(customerName);
         this.setGenderRadio(genderRadio);
         this.setCustomerDateOfBirthTxt(dateOfBirth);
@@ -102,6 +129,7 @@ public class NewCustomerPage {
         this.setEmailTxt(emailTxt);
         this.setPasswordTxt(passwordTxt);
         this.clickReset();
+        return this.getTxt();
     }
 
 

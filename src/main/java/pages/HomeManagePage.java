@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class HomeManagePage {
 
     private WebDriver driver;
@@ -48,7 +50,9 @@ public class HomeManagePage {
         return new CustomisedStatementPage(driver);
     }
 
-    public void logout() {
+    public String logout() {
         driver.findElement(LogoutLink).click();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
 }

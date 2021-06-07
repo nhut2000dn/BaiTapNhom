@@ -23,19 +23,22 @@ public class LoginTests {
     @Test
     @DisplayName("TC003- Login (resetButton)")
     public void testLoginFail2() {
-        loginPage.resetButton("sss", "ssss");
+        String text = loginPage.resetButton("ssssssss", "sssssssss");
+        Assertions.assertTrue(text.contains(""));
     }
 
     @Test
     @DisplayName("TC002- Login Fail (Invalid)")
     public void testLoginFail1 () {
-        loginPage.testLogin("sss", "ssss");
+        String alert = loginPage.testLogin("nhutpro", "sssss");
+        Assertions.assertTrue(alert.contains("User or Password is not valid"));
     }
 
     @Test
     @DisplayName("TC001- Login successfully")
     public void testLoginSuccessful() {
-        loginPage.testLogin("mgr123", "mgr!23");
+        String txt = loginPage.testLoginSuccesfull("mgr123", "mgr!23");
+        Assertions.assertTrue(txt.contains("Welcome To Manager's Page of Guru99 Bank"));
     }
 
     public static void main(String[] args) {

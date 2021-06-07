@@ -16,6 +16,15 @@ public class FundTransferPage {
         this.driver = driver;
     }
 
+    public String getTxt() {
+        return driver.findElement(PayerAccountTxt).getText() + driver.findElement(PayeeAccountTxt).getText();
+    }
+
+    public String txtSuccesful() {
+        driver.findElement(SubmitButton).click();
+        return driver.findElement(By.className("heading3")).getText();
+    }
+
     public void setPayerAccountTxt(String payerAccountTxt) {
         driver.findElement(PayerAccountTxt).sendKeys(payerAccountTxt);
     }
@@ -39,18 +48,30 @@ public class FundTransferPage {
         driver.findElement(ResetButton).click();
     }
 
-    public void fundTransferTest(String payerAccountTxt,String payeeAccountTxt, String amountTxt, String descriptionTxt){
+    public String fundTransferTest(String payerAccountTxt,String payeeAccountTxt, String amountTxt, String descriptionTxt){
         this.setPayerAccountTxt(payerAccountTxt);
         this.setPayeeAccountTxt(payeeAccountTxt);
         this.setAmountTxt(amountTxt);
         this.setDescriptionTxt(descriptionTxt);
         this.clickSubmitButton();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
-    public void testResetButton(String payerAccountTxt,String payeeAccountTxt, String amountTxt, String descriptionTxt){
+
+    public String fundTransferTestSuccesful(String payerAccountTxt,String payeeAccountTxt, String amountTxt, String descriptionTxt){
+        this.setPayerAccountTxt(payerAccountTxt);
+        this.setPayeeAccountTxt(payeeAccountTxt);
+        this.setAmountTxt(amountTxt);
+        this.setDescriptionTxt(descriptionTxt);
+        return this.txtSuccesful();
+    }
+
+    public String testResetButton(String payerAccountTxt,String payeeAccountTxt, String amountTxt, String descriptionTxt){
         this.setPayerAccountTxt(payerAccountTxt);
         this.setPayeeAccountTxt(payeeAccountTxt);
         this.setAmountTxt(amountTxt);
         this.setDescriptionTxt(descriptionTxt);
         this.clickResetButton();
+        return getTxt();
     }
 }

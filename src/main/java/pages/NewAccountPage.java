@@ -20,6 +20,15 @@ public class NewAccountPage {
         driver.findElement(CustomerIdTxt).sendKeys(customerIdTxt);
     }
 
+    public String getTxt() {
+        return driver.findElement(CustomerIdTxt).getText() + driver.findElement(InitialDepositTxt).getText();
+    }
+
+    public String txtSuccesful() {
+        driver.findElement(SubmitButton).click();
+        return driver.findElement(By.className("heading3")).getText();
+    }
+
     public void setSelectTypeCustomer(String selectTypeCustomer) {
         driver.findElement(SelectTypeCustomer).sendKeys(selectTypeCustomer);
     }
@@ -36,16 +45,27 @@ public class NewAccountPage {
         driver.findElement(ResetButton).click();
     }
 
-    public void newAccount(String customerIdTxt, String selectTypeCustomer, String initialDepositTxt){
+    public String newAccount(String customerIdTxt, String selectTypeCustomer, String initialDepositTxt){
         this.setCustomerIdTxt(customerIdTxt);
         this.setSelectTypeCustomer(selectTypeCustomer);
         this.setInitialDepositTxt(initialDepositTxt);
         this.clickSubmitButton();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
-    public void testResetButton(String customerIdTxt, String selectTypeCustomer, String initialDepositTxt){
+
+    public String newAccountSuccesfull(String customerIdTxt, String selectTypeCustomer, String initialDepositTxt){
+        this.setCustomerIdTxt(customerIdTxt);
+        this.setSelectTypeCustomer(selectTypeCustomer);
+        this.setInitialDepositTxt(initialDepositTxt);
+        return this.txtSuccesful();
+    }
+
+    public String testResetButton(String customerIdTxt, String selectTypeCustomer, String initialDepositTxt){
         this.setCustomerIdTxt(customerIdTxt);
         this.setSelectTypeCustomer(selectTypeCustomer);
         this.setInitialDepositTxt(initialDepositTxt);
         this.clickResetButton();
+        return getTxt();
     }
 }

@@ -15,6 +15,15 @@ public class WithdrawalPage {
         this.driver = driver;
     }
 
+    public String getTxt() {
+        return driver.findElement(AccountNoTxt).getText() + driver.findElement(AmountTxt).getText() + driver.findElement(DescriptionTxt).getText();
+    }
+
+    public String txtSuccesful() {
+        driver.findElement(SubmitButton).click();
+        return driver.findElement(By.className("heading3")).getText();
+    }
+
     public void setAccountNoTxt(String accountNoTxt) {
         driver.findElement(AccountNoTxt).sendKeys(accountNoTxt);
     }
@@ -35,16 +44,27 @@ public class WithdrawalPage {
         driver.findElement(ResetButton).click();
     }
 
-    public void withdrawTest(String accountNoTxt, String amountTxt, String descriptionTxt){
+    public String withdrawTest(String accountNoTxt, String amountTxt, String descriptionTxt){
         this.setAccountNoTxt(accountNoTxt);
         this.setAmountTxt(amountTxt);
         this.setDescriptionTxt(descriptionTxt);
         this.clickSubmitButton();
+        String alertMessage= driver.switchTo().alert().getText();
+        return alertMessage;
     }
-    public void testResetButton(String accountNoTxt, String amountTxt, String descriptionTxt){
+
+    public String withdrawTestSuccesful(String accountNoTxt, String amountTxt, String descriptionTxt){
+        this.setAccountNoTxt(accountNoTxt);
+        this.setAmountTxt(amountTxt);
+        this.setDescriptionTxt(descriptionTxt);
+        return txtSuccesful();
+    }
+
+    public String testResetButton(String accountNoTxt, String amountTxt, String descriptionTxt){
         this.setAccountNoTxt(accountNoTxt);
         this.setAmountTxt(amountTxt);
         this.setDescriptionTxt(descriptionTxt);
         this.clickResetButton();
+        return getTxt();
     }
 }
